@@ -1,4 +1,3 @@
-# Calculadora-de-frete
 #calculo de frete
 from abc import ABC, abstractmethod
 import os
@@ -25,7 +24,7 @@ class LogisticaFactory:
     def criar_transporte(tipo):
         tipo = tipo.upper()
         
-  if tipo == "EXPRESSO":
+        if tipo == "EXPRESSO":
             return Moto()
         elif tipo == "PADRAO":
             return Carro()
@@ -38,22 +37,22 @@ def limpar():
     
 if __name__ == "__main__":
 
-  historico_de_envios = []
+    historico_de_envios = []
 
-  while True:
+    while True:
         limpar()
         print("\n SISTEMA DE LOGÍSTICA ")
         print("\n=== NOVO PEDIDO DE FRETE ===")
         nome = input("Nome do Cliente: ")
         
-  print("\nSelecione o tipo de serviço:")
-  print("1 - Expresso (Moto)")
-  print("2 - Padrão (Carro)")
-  print("3 - Carga Pesada (Caminhão)")
+        print("\nSelecione o tipo de serviço:")
+        print("1 - Expresso (Moto)")
+        print("2 - Padrão (Carro)")
+        print("3 - Carga Pesada (Caminhão)")
          
-  opcao = input("Digite o número da opção: ")
+        opcao = input("Digite o número da opção: ")
         
-  tipo_servico = ""
+        tipo_servico = ""
         if opcao == "1":
             tipo_servico = "EXPRESSO"
         elif opcao == "3":
@@ -61,31 +60,36 @@ if __name__ == "__main__":
         else:
             tipo_servico = "PADRAO"
 
-  try:
-     distancia = float(input("\nDigite a distância (km): "))
-       except ValueError:
-           print("Erro: Digite apenas números para a distância.")
+        try:
+            distancia = float(input("\nDigite a distância (km): "))
+        except ValueError:
+            print("Erro: Digite apenas números para a distância.")
             continue
 
-  veiculo = LogisticaFactory.criar_transporte(tipo_servico)
+        veiculo = LogisticaFactory.criar_transporte(tipo_servico)
         
-  dados_do_pedido = {
-        "cliente": nome,
-        "veiculo_objeto": veiculo, 
-        "km": distancia
+        dados_do_pedido = {
+            "cliente": nome,
+            "veiculo_objeto": veiculo, 
+            "km": distancia
         }
 
-  historico_de_envios.append(dados_do_pedido)
-    custo_atual = veiculo.calcular_frete(distancia)
+        historico_de_envios.append(dados_do_pedido)
+
+        custo_atual = veiculo.calcular_frete(distancia)
         print(f"Pedido adicionado! Custo: R${custo_atual:.2f}")
+
         continuar = input("\nDeseja calcular outro frete? (s/n): ")
         if continuar.lower() != 's':
             break
-            print("\n\n=== RELATÓRIO DO DIA  ===")
+        
+    print("\n\n=== RELATÓRIO DO DIA  ===")
     
-  for pedido in historico_de_envios:
+    for pedido in historico_de_envios:
         obj_veiculo = pedido["veiculo_objeto"]
         dist = pedido["km"]
         cli = pedido["cliente"]
-      valor_final = obj_veiculo.calcular_frete(dist)
-            print(f"Cliente: {cli} | Veículo: {type(obj_veiculo).__name__} | Distância: {dist}km | Total: R${valor_final:.2f}")
+
+        valor_final = obj_veiculo.calcular_frete(dist)
+        
+        print(f"Cliente: {cli} | Veículo: {type(obj_veiculo).__name__} | Distância: {dist}km | Total: R${valor_final:.2f}")
